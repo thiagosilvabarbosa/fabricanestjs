@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 
 @Controller('messages')
@@ -25,5 +25,10 @@ export class MessagesController {
     @Post()  // post para criar novos usuarios
     create(@Body() message: Message){
         return this.messagesService.create(message);
+    }
+
+    @Put(":id")// edição de parametros
+    update(@Param() params, @Body() message: Message){
+        return this.messagesService.update(+params.id, message);
     }
 }
