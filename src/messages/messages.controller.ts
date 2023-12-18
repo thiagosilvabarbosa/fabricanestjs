@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 
 @Controller('messages')
@@ -17,8 +17,9 @@ export class MessagesController {
 
     @Get(':id') // get para pesquisar por id
     findById(@Param() params ){
-        console.log(+params.id); //console.log para testar qual id está recebendo
-        return this.messagesService.findById(+params.id);
+        return this.messagesService.findById(+params.id).catch((e)=>{
+            throw new NotFoundException(e.message);
+        });
 
     }
 
