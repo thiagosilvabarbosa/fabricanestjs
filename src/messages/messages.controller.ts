@@ -30,8 +30,10 @@ export class MessagesController {
     }
 
     @Put(":id")// edição de parametros
-    update(@Param() params, @Body() message: Message){
-        return this.messagesService.update(+params.id, message);
+    update(@Param() params, @Body() messageDto: MessageDto){
+        return this.messagesService.update(+params.id, messageDto).catch((e)=>{
+            throw new NotFoundException(e.message);
+        });
     }
 
     @Delete(":id")
